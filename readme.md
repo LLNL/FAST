@@ -52,7 +52,7 @@ python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "
 
 We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbind.org.cn). Particularly, we used general and refined datasets for training and validation, and evaluated the model on the core set (see sample_data/core_test.hdf). 
 
-Checkpoint files for the models can be found [here](.)
+Checkpoint files for the models can be found here: ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/ (.)
 
 
 
@@ -70,7 +70,7 @@ the destination branch on the repository.
 
 ## Authors
 
-FAST was created by Hyojin Kim (hkim@llnl.gov), Derek Jones (jones289@llnl.gov), Jonathan Allen (allen99.gov). 
+FAST was created by Hyojin Kim (hkim@llnl.gov), Derek Jones (jones289@llnl.gov), Jonathan Allen (allen99@llnl.gov). 
 
 ### Other contributors
 This project was supported by the American Heart Association (AHA) project (PI: Felice Lightstone). 

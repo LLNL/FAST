@@ -31,12 +31,25 @@ from torch_geometric.utils import (
     is_undirected,
     to_undirected,
 )
+
+'''
 from torch_geometric.utils import (
     normalized_cut,
     scatter_,
     contains_self_loops,
     add_self_loops,
 )
+'''
+
+from torch_geometric.utils import (
+    normalized_cut,
+    contains_self_loops,
+    add_self_loops,
+)
+
+#from torch_scatter import scatter as scatter_
+from torch_geometric.utils import scatter_
+
 from torch_geometric.nn import DataParallel as GeometricDataParallel
 from torch_geometric.data import Batch
 from ggcnn import GatedGraphConv, PotentialNetAttention
@@ -125,7 +138,10 @@ class PotentialNetPropagation(torch.nn.Module):
 class GraphThreshold(torch.nn.Module):
     def __init__(self, t):
         super(GraphThreshold, self).__init__()
-        self.t = nn.Parameter(t, requires_grad=True).cuda()
+        if torch.cuda.is_available():
+            self.t = nn.Parameter(t, requires_grad=True).cuda()
+        else:
+            self.t = nn.Parameter(t, requires_grad=True)
 
     def filter_adj(self, row, col, edge_attr, mask):
         mask = mask.squeeze()
@@ -193,6 +209,7 @@ class PotentialNetParallel(torch.nn.Module):
         non_covalent_k=1,
         covalent_neighbor_threshold=None,
         non_covalent_neighbor_threshold=None,
+        always_return_hidden_feature=False,
     ):
         super(PotentialNetParallel, self).__init__()
 
@@ -201,12 +218,26 @@ class PotentialNetParallel(torch.nn.Module):
             and non_covalent_neighbor_threshold is not None
         )
 
-        self.covalent_neighbor_threshold = GraphThreshold(
-            torch.ones(1).cuda() * covalent_neighbor_threshold
+        if torch.cuda.is_available():
+            self.covalent_neighbor_threshold = GraphThreshold(
+                torch.ones(1).cuda() * covalent_neighbor_threshold
+         )
+        else:
+            self.covalent_neighbor_threshold = GraphThreshold(
+                torch.ones(1) * covalent_neighbor_threshold
         )
-        self.non_covalent_neighbor_threshold = GraphThreshold(
-            torch.ones(1).cuda() * non_covalent_neighbor_threshold
-        )  # need to add params for upper/lower covalent/non_covalent_t
+
+        if torch.cuda.is_available():
+            self.non_covalent_neighbor_threshold = GraphThreshold(
+                torch.ones(1).cuda() * non_covalent_neighbor_threshold
+            )  # need to add params for upper/lower covalent/non_covalent_t
+        else:
+            self.non_covalent_neighbor_threshold = GraphThreshold(
+                torch.ones(1) * non_covalent_neighbor_threshold
+            )
+
+        self.always_return_hidden_feature = always_return_hidden_feature
+
         self.global_add_pool = global_add_pool
 
         self.covalent_propagation = PotentialNetPropagation(
@@ -231,10 +262,11 @@ class PotentialNetParallel(torch.nn.Module):
 
     def forward(self, data, return_hidden_feature=False):
 
-        data.x = data.x.cuda()
-        data.edge_attr = data.edge_attr.cuda()
-        data.edge_index = data.edge_index.cuda()
-        data.batch = data.batch.cuda()
+        if torch.cuda.is_available():
+            data.x = data.x.cuda()
+            data.edge_attr = data.edge_attr.cuda()
+            data.edge_index = data.edge_index.cuda()
+            data.batch = data.batch.cuda()
 
         # make sure that we have undirected graph
         if not is_undirected(data.edge_index):
@@ -245,23 +277,6 @@ class PotentialNetParallel(torch.nn.Module):
             data.edge_index, data.edge_attr = add_self_loops(
                 data.edge_index, data.edge_attr.view(-1)
             )
-
-        """
-        # now select the top 5 closest neighbors to each node
-
-
-        dense_adj = sparse_to_dense(edge_index=data.edge_index, edge_attr=data.edge_attr)
-
-        #top_k_vals, top_k_idxs = torch.topk(dense_adj, dim=0, k=5, largest=False)
-
-        #dense_adj = torch.zeros_like(dense_adj).scatter(1, top_k_idxs, top_k_vals)
-        
-        dense_adj[dense_adj == 0] = 10000   # insert artificially large values for 0 valued entries that will throw off NN calculation
-        top_k_vals, top_k_idxs = torch.topk(dense_adj, dim=1, k=15, largest=False)
-        dense_adj = torch.zeros_like(dense_adj).scatter(1, top_k_idxs, top_k_vals)
-        
-        data.edge_index, data.edge_attr = dense_to_sparse(dense_adj)
-        """
 
         # covalent_propagation
         # add self loops to enable self propagation
@@ -287,7 +302,7 @@ class PotentialNetParallel(torch.nn.Module):
         pool_x = self.global_add_pool(non_covalent_ligand_only_x, data.batch)
 
         # fully connected and output layers
-        if return_hidden_feature:
+        if return_hidden_feature or self.always_return_hidden_feature:
             # return prediction and atomistic features (covalent result, non-covalent result, pool result)
 
             avg_covalent_x, _ = avg_pool_x(data.batch, covalent_x, data.batch)

@@ -28,8 +28,15 @@ from model import PotentialNetParallel
 
 
 def test(args):
-    model_train_dict = torch.load(args.checkpoint)
 
+    if torch.cuda.is_available():
+
+        model_train_dict = torch.load(args.checkpoint)
+
+    else:
+        model_train_dict = torch.load(args.checkpoint, map_location=torch.device('cpu'))
+
+    '''
     model = GeometricDataParallel(
         PotentialNetParallel(
             in_channels=20,
@@ -46,11 +53,34 @@ def test(args):
             ],
         )
     ).float()
+    
+    '''
+    model = PotentialNetParallel(
+            in_channels=20,
+            out_channels=1,
+            covalent_gather_width=model_train_dict["args"]["covalent_gather_width"],
+            non_covalent_gather_width=model_train_dict["args"][
+                "non_covalent_gather_width"
+            ],
+            covalent_k=model_train_dict["args"]["covalent_k"],
+            non_covalent_k=model_train_dict["args"]["non_covalent_k"],
+            covalent_neighbor_threshold=model_train_dict["args"]["covalent_threshold"],
+            non_covalent_neighbor_threshold=model_train_dict["args"][
+                "non_covalent_threshold"
+            ],
+        ).float()
+    
+    model_module = torch.nn.Module()
+    model_module.add_module('module', model)
+    model = model_module
+
+    print(model_module, model)
+    
 
     model.load_state_dict(model_train_dict["model_state_dict"])
 
     dataset_list = []
-
+    
     # because the script allows for multiple datasets, we iterate over the list of files to build one combined dataset object
     for data in args.test_data:
         dataset_list.append(
@@ -71,7 +101,9 @@ def test(args):
     dataloader = DataListLoader(dataset, batch_size=args.batch_size, shuffle=False)
 
     model.eval()
-    model.cuda()
+    if torch.cuda.is_available():
+    
+        model.cuda()
 
     if args.print_model:
         print(model)
@@ -133,7 +165,7 @@ def test(args):
                     data=hidden_features,
                 )
 
-
+    
 def main(args):
     test(args)
 

@@ -13,6 +13,8 @@ from torch import Tensor
 from torch.nn import Parameter as Param
 from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.utils import softmax, scatter_
+#from torch_geometric.utils import softmax
+#from torch_scatter import scatter as scatter_
 from torch_geometric.nn.inits import uniform, reset
 
 

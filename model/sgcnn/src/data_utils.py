@@ -36,7 +36,8 @@ class PDBBindDataset(Dataset):
         preprocessing_type,
         use_docking=False,
         output_info=False,
-        cache_data=True
+        cache_data=True,
+        h5_file_driver=None
 
     ):
         super(PDBBindDataset, self).__init__()
@@ -51,6 +52,9 @@ class PDBBindDataset(Dataset):
         self.data_dict = {}  # will use this to store data once it has been computed if cache_data is True
 
         self.data_list = []  # will use this to store ids for data
+
+        self.h5_file_driver = h5_file_driver
+
 
         if self.use_docking:
 
@@ -71,7 +75,7 @@ class PDBBindDataset(Dataset):
 
         else:
 
-            with h5py.File(data_file, "r") as f:
+            with h5py.File(data_file, "r", driver=self.h5_file_driver) as f:
 
                 for name in list(f):
                     # if the feature type (pybel or rdkit) not available, skip over it

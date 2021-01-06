@@ -52,7 +52,7 @@ from torch_geometric.utils import scatter_
 
 from torch_geometric.nn import DataParallel as GeometricDataParallel
 from torch_geometric.data import Batch
-from ggcnn import GatedGraphConv, PotentialNetAttention
+from .ggcnn import GatedGraphConv, PotentialNetAttention
 from torch.nn import init
 
 
@@ -262,6 +262,8 @@ class PotentialNetParallel(torch.nn.Module):
 
     def forward(self, data, return_hidden_feature=False):
 
+        #import pdb
+        #pdb.set_trace()
         if torch.cuda.is_available():
             data.x = data.x.cuda()
             data.edge_attr = data.edge_attr.cuda()

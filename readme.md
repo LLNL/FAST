@@ -8,7 +8,7 @@ Predicting accurate protein-ligand binding affinity is important in drug discove
 
 ### Prerequisites
 
-~~- [Tensorflow 1.14 or higher (but not 2.X](https://www.tensorflow.org)~~
+~~- Tensorflow 1.14 or higher~~
 - [PyTorch 1.4 or higher](https://pytorch.org)
 - [PyTorch Geometric Feature)](https://github.com/rusty1s/pytorch_geometric)
 - [rdkit](rdkit.org) (optional)

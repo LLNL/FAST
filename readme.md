@@ -8,13 +8,13 @@ Predicting accurate protein-ligand binding affinity is important in drug discove
 
 ### Prerequisites
 
-- [Tensorflow 1.14 or higher (but not 2.X](https://www.tensorflow.org)
+- ~~[Tensorflow 1.14 or higher (but not 2.X](https://www.tensorflow.org)
 - [PyTorch 1.4 or higher](https://pytorch.org)
 - [PyTorch Geometric Feature)](https://github.com/rusty1s/pytorch_geometric)
-- [rdkit](rdkit.org)
-- [pybel](https://github.com/pybel/pybel)
-- [pdbfixer](https://github.com/openmm/pdbfixer)
-- [tfbio](https://gitlab.com/cheminfIBB/tfbio)
+- [rdkit](rdkit.org) (optional)
+- [pybel](https://github.com/pybel/pybel)  (optional)
+- [pdbfixer](https://github.com/openmm/pdbfixer)  (optional)
+- [tfbio](https://gitlab.com/cheminfIBB/tfbio)  (optional)
 
 
 ### Running the application
@@ -27,11 +27,25 @@ Each complex/pocket data is comprised of a list of atoms with their features inc
 
 #### 3D-CNN
 
-To train or test 3D-CNN, run model/3dcnn/main_3dcnn_pdbbind.py. 
+Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in model/3dcnn
+
+
+##### 3D-CNN tensorflow version (used in the paper)
+
+To train or test 3D-CNN, run model/3dcnn_tf/main_3dcnn_pdbbind.py. 
 Here is an example comand to test a pre-trained 3D-CNN model:
 
 python main_3dcnn_pdbbind.py --main-dir "pdbbind_3dcnn" --model-subdir "pdbbind2016_refined" --run-mode 5 --external-hdftype 3 --external-testhdf "eval_set.hdf" --external-featprefix "eval_3dcnn" --external-dir "pdbbind_2019"
 
+
+##### 3D-CNN pytorch version (new version)
+
+In this new version, the voxelization process is done on GPU, which improves performance/speed-up. The new version is located in model/3dcnn
+
+To train, run model/3dcnn/main_train.py
+To test/evaluate, run model/3dcnn/model_eval.py
+
+model/data_reader.py is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
 
 
 #### SG-CNN

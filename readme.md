@@ -97,6 +97,7 @@ If you need to reference FAST in a publication, please cite the following paper:
 
 Derek Jones, Hyojin Kim, Xiaohua Zhang, Adam Zemla, William D. Bennett, Dan Kirshner, Sergio Wong, Felice
 Lightstone, and Jonathan E. Allen, "Improved Protein-ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference", arxiv 2020. 
+
 '''
 {jones_kim2020improved,
   title = {Improved Protein-ligand Binding Affinity Prediction with

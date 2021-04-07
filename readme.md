@@ -58,7 +58,7 @@ For an example training script, see `model/sgcnn/scripts/train_pybel_pdbbind_201
 
 #### Fusion
 
-To train or test fusion model, run model/fusion/main_fusion_pdbbind.py
+To train or test fusion model, run `model/fusion/main_fusion_pdbbind.py`
 
 ```
 python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "pdbbind2016_fusion" --run-mode 3 --external-csvfile "eval_3dcnn.csv" --external-3dcnn-featfile "eval_3dcnn_fc10.npy" --external-sgcnn-featfile "eval_sgcnn_feat.npy" --external-outprefix "eval_fusion" --external-dir "pdbbind_2019"
@@ -68,7 +68,7 @@ python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "
 
 We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbind.org.cn). Particularly, we used general and refined datasets for training and validation, and evaluated the model on the core set (see sample_data/core_test.hdf). 
 
-The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/. 
+The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found [here](ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/). 
 
 
 

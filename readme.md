@@ -68,7 +68,7 @@ python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "
 
 We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbind.org.cn). Particularly, we used general and refined datasets for training and validation, and evaluated the model on the core set (see sample_data/core_test.hdf). 
 
-The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/. 
+The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: `ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/`. 
 
 
 

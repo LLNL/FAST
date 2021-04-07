@@ -27,40 +27,42 @@ Each complex/pocket data is comprised of a list of atoms with their features inc
 
 #### 3D-CNN
 
-Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in model/3dcnn
+Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in `model/3dcnn`
 
 
 ##### 3D-CNN tensorflow version (used in the paper)
 
-To train or test 3D-CNN, run model/3dcnn_tf/main_3dcnn_pdbbind.py. 
+To train or test 3D-CNN, run `model/3dcnn_tf/main_3dcnn_pdbbind.py`. 
 Here is an example comand to test a pre-trained 3D-CNN model:
 
+```
 python main_3dcnn_pdbbind.py --main-dir "pdbbind_3dcnn" --model-subdir "pdbbind2016_refined" --run-mode 5 --external-hdftype 3 --external-testhdf "eval_set.hdf" --external-featprefix "eval_3dcnn" --external-dir "pdbbind_2019"
-
+```
 
 ##### 3D-CNN pytorch version (new version)
 
-In this new version, the voxelization process is done on GPU, which improves performance/speed-up. The new version is located in model/3dcnn
+In this new version, the voxelization process is done on GPU, which improves performance/speed-up. The new version is located in `model/3dcnn`
 
-To train, run model/3dcnn/main_train.py
-To test/evaluate, run model/3dcnn/model_eval.py
+To train, run `model/3dcnn/main_train.py`
+To test/evaluate, run `model/3dcnn/model_eval.py`
 
-model/data_reader.py is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
+`model/data_reader.py` is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
 
 
 #### SG-CNN
 
-To train or test SG-CNN, run model/sgcnn/src/train.py or model/sgcnn/src/test.py. 
+To train or test SG-CNN, run `model/sgcnn/src/train.py` or `model/sgcnn/src/test.py`. 
 
-For an example training script, see model/sgcnn/scripts/train_pybel_pdbbind_2016_general_refined.sh 
+For an example training script, see `model/sgcnn/scripts/train_pybel_pdbbind_2016_general_refined.sh`
 
 
 #### Fusion
 
 To train or test fusion model, run model/fusion/main_fusion_pdbbind.py
 
+```
 python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "pdbbind2016_fusion" --run-mode 3 --external-csvfile "eval_3dcnn.csv" --external-3dcnn-featfile "eval_3dcnn_fc10.npy" --external-sgcnn-featfile "eval_sgcnn_feat.npy" --external-outprefix "eval_fusion" --external-dir "pdbbind_2019"
-
+```
 
 #### Pre-trained weights (checkpoint files)
 
@@ -95,19 +97,22 @@ This project was supported by the American Heart Association (AHA) project (PI: 
 
 If you need to reference FAST in a publication, please cite the following paper:
 
-Derek Jones, Hyojin Kim, Xiaohua Zhang, Adam Zemla, William D. Bennett, Dan Kirshner, Sergio Wong, Felice
-Lightstone, and Jonathan E. Allen, "Improved Protein-ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference", arxiv 2020. 
+
+
+
+Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirshner, D., Wong, S. E., Lightstone, F. C., & Allen, J. E. (2021). Improved Protein-Ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference. Journal of Chemical Information and Modeling. https://doi.org/10.1021/acs.jcim.0c01306
 
 ```
-{jones_kim2020improved,
-  title = {Improved Protein-ligand Binding Affinity Prediction with
-                     {Structure-Based} Deep Fusion Inference},
-  author = {Jones, Derek and Kim, Hyojin and Zhang, Xiaohua and Zemla, Adam and Stevenson, Garrett and Bennett, William D and Kirshner, Dan and Wong, Sergio and Lightstone, Felice and Allen, Jonathan E},
-  month = may,
-  year = {2020},
-  archiveprefix = {arXiv},
-  primaryclass = {q-bio.BM},
-  eprint = {2005.07704},
+@ARTICLE{Jones_Kim_improved_2021,
+  title    = "Improved {Protein-Ligand} Binding Affinity Prediction with
+              {Structure-Based} Deep Fusion Inference",
+  author   = "Jones, Derek and Kim, Hyojin and Zhang, Xiaohua and Zemla, Adam
+              and Stevenson, Garrett and Bennett, W F Drew and Kirshner, Daniel
+              and Wong, Sergio E and Lightstone, Felice C and Allen, Jonathan E",
+  journal  = "J. Chem. Inf. Model.",
+  month    =  mar,
+  year     =  2021,
+  language = "en"
 }
 ```
 

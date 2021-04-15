@@ -70,6 +70,9 @@ We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbi
 
 The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: `ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/`. 
 
+#### PDBSpheres evaluation set
+
+We make available the hold-out test set from the manuscript here: `sample_data/PDBSPHERES_EVAL_SET.csv`
 
 
 ## Contributing

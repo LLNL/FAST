@@ -105,7 +105,9 @@ If you need to reference FAST in a publication, please cite the following paper:
 
 Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirshner, D., Wong, S. E., Lightstone, F. C., & Allen, J. E. (2021). Improved Protein-Ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference. Journal of Chemical Information and Modeling. https://doi.org/10.1021/acs.jcim.0c01306
 
+
 ```
+
 @ARTICLE{Jones_Kim_improved_2021,
   title    = "Improved {Protein-Ligand} Binding Affinity Prediction with
               {Structure-Based} Deep Fusion Inference",
@@ -113,11 +115,16 @@ Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirs
               and Stevenson, Garrett and Bennett, W F Drew and Kirshner, Daniel
               and Wong, Sergio E and Lightstone, Felice C and Allen, Jonathan E",
   journal  = "J. Chem. Inf. Model.",
-  month    =  mar,
+  volume   =  61,
+  number   =  4,
+  pages    = "1583--1592",
+  month    =  apr,
   year     =  2021,
   language = "en"
 }
+
 ```
+
 
 
 ## License

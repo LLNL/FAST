@@ -27,7 +27,7 @@ Each complex/pocket data is comprised of a list of atoms with their features inc
 
 #### 3D-CNN
 
-Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in model/3dcnn
+Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in model/3dcnn.
 
 
 ##### 3D-CNN tensorflow version (used in the paper)
@@ -45,7 +45,12 @@ In this new version, the voxelization process is done on GPU, which improves per
 To train, run model/3dcnn/main_train.py
 To test/evaluate, run model/3dcnn/model_eval.py
 
-model/data_reader.py is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
+example evaluation: 
+python main_eval.py  --data-dir [directory storing data hdf and csv files]  --mlhdf-fn [hdf file name]  --model-path [full path to model checkpoint file (.pth)] --complex-type [1: crystal, 2: docking]
+
+python main_eval.py  --data-dir /a/b/c  --mlhdf-fn data_ml.hdf  --model-path d/e/model_3dcnn_01.pth --complex-type 2 --save-pred --save-feat
+
+Note that model/3dcnn/data_reader.py is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
 
 
 #### SG-CNN
@@ -67,6 +72,8 @@ python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "
 We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbind.org.cn). Particularly, we used general and refined datasets for training and validation, and evaluated the model on the core set (see sample_data/core_test.hdf). 
 
 The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/. 
+
+Note that the new 3dcnn checkpoint for pytorch (model_checkpoint_3dcnn.tgz) was trained on pdbbind 2019 refined dataset.  
 
 
 

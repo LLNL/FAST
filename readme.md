@@ -27,54 +27,60 @@ Each complex/pocket data is comprised of a list of atoms with their features inc
 
 #### 3D-CNN
 
-Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in model/3dcnn.
+Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in `model/3dcnn`
 
 
 ##### 3D-CNN tensorflow version (used in the paper)
 
-To train or test 3D-CNN, run model/3dcnn_tf/main_3dcnn_pdbbind.py. 
+To train or test 3D-CNN, run `model/3dcnn_tf/main_3dcnn_pdbbind.py`. 
 Here is an example comand to test a pre-trained 3D-CNN model:
 
+```
 python main_3dcnn_pdbbind.py --main-dir "pdbbind_3dcnn" --model-subdir "pdbbind2016_refined" --run-mode 5 --external-hdftype 3 --external-testhdf "eval_set.hdf" --external-featprefix "eval_3dcnn" --external-dir "pdbbind_2019"
-
+```
 
 ##### 3D-CNN pytorch version (new version)
 
-In this new version, the voxelization process is done on GPU, which improves performance/speed-up. The new version is located in model/3dcnn
+In this new version, the voxelization process is done on GPU, which improves performance/speed-up. The new version is located in `model/3dcnn`
 
-To train, run model/3dcnn/main_train.py
-To test/evaluate, run model/3dcnn/model_eval.py
+To train, run `model/3dcnn/main_train.py`
+To test/evaluate, run `model/3dcnn/model_eval.py`
 
 example evaluation: 
-python main_eval.py  --data-dir [directory storing data hdf and csv files]  --mlhdf-fn [hdf file name]  --model-path [full path to model checkpoint file (.pth)] --complex-type [1: crystal, 2: docking]
+`python main_eval.py  --data-dir [directory storing data hdf and csv files]  --mlhdf-fn [hdf file name]  --model-path [full path to model checkpoint file (.pth)] --complex-type [1: crystal, 2: docking]`
 
-python main_eval.py  --data-dir /a/b/c  --mlhdf-fn data_ml.hdf  --model-path d/e/model_3dcnn_01.pth --complex-type 2 --save-pred --save-feat
+`python main_eval.py  --data-dir /a/b/c  --mlhdf-fn data_ml.hdf  --model-path d/e/model_3dcnn_01.pth --complex-type 2 --save-pred --save-feat`
 
-Note that model/3dcnn/data_reader.py is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
+Note that `model/3dcnn/data_reader.py` is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
 
 
 #### SG-CNN
 
-To train or test SG-CNN, run model/sgcnn/src/train.py or model/sgcnn/src/test.py. 
+To train or test SG-CNN, run `model/sgcnn/src/train.py` or `model/sgcnn/src/test.py`. 
 
-For an example training script, see model/sgcnn/scripts/train_pybel_pdbbind_2016_general_refined.sh 
+For an example training script, see `model/sgcnn/scripts/train_pybel_pdbbind_2016_general_refined.sh`
 
 
 #### Fusion
 
-To train or test fusion model, run model/fusion/main_fusion_pdbbind.py
+To train or test fusion model, run `model/fusion/main_fusion_pdbbind.py`
 
+```
 python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "pdbbind2016_fusion" --run-mode 3 --external-csvfile "eval_3dcnn.csv" --external-3dcnn-featfile "eval_3dcnn_fc10.npy" --external-sgcnn-featfile "eval_sgcnn_feat.npy" --external-outprefix "eval_fusion" --external-dir "pdbbind_2019"
-
+```
 
 #### Pre-trained weights (checkpoint files)
 
 We trained all of the networks above on [pdbbind 2016 datasets](http://www.pdbbind.org.cn). Particularly, we used general and refined datasets for training and validation, and evaluated the model on the core set (see sample_data/core_test.hdf). 
 
-The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/. 
+The checkpoint files for the models are made available under the Creative Commons BY 4.0 license. See the license section below for the terms of the license. The files can be found here: `ftp://gdo-bioinformatics.ucllnl.org/fast/pdbbind2016_model_checkpoints/`. 
 
 Note that the new 3dcnn checkpoint for pytorch (model_checkpoint_3dcnn.tgz) was trained on pdbbind 2019 refined dataset.  
 
+
+#### PDBSpheres evaluation set
+
+We make available the hold-out test set from the manuscript here: `sample_data/PDBSPHERES_EVAL_SET.csv`
 
 
 ## Contributing
@@ -102,8 +108,27 @@ This project was supported by the American Heart Association (AHA) project (PI: 
 
 If you need to reference FAST in a publication, please cite the following paper:
 
-Derek Jones, Hyojin Kim, Xiaohua Zhang, Adam Zemla, William D. Bennett, Dan Kirshner, Sergio Wong, Felice
-Lightstone, and Jonathan E. Allen, "Improved Protein-ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference", arxiv 2020. 
+
+Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirshner, D., Wong, S. E., Lightstone, F. C., & Allen, J. E. (2021). Improved Protein-Ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference. Journal of Chemical Information and Modeling, 61(4), 1583–1592. https://doi.org/10.1021/acs.jcim.0c01306
+
+
+```
+@ARTICLE{Jones_Kim_improved_2021,
+  title    = "Improved {Protein-Ligand} Binding Affinity Prediction with
+              {Structure-Based} Deep Fusion Inference",
+  author   = "Jones, Derek and Kim, Hyojin and Zhang, Xiaohua and Zemla, Adam
+              and Stevenson, Garrett and Bennett, W F Drew and Kirshner, Daniel
+              and Wong, Sergio E and Lightstone, Felice C and Allen, Jonathan E",
+  journal  = "J. Chem. Inf. Model.",
+  volume   =  61,
+  number   =  4,
+  pages    = "1583--1592",
+  month    =  apr,
+  year     =  2021,
+  language = "en"
+}
+
+```
 
 
 

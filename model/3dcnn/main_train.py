@@ -144,7 +144,8 @@ def train():
 	# load model
 	epoch_start = 0
 	if valid_file(args.model_path):
-		checkpoint = torch.load(args.model_path)
+		checkpoint = torch.load(args.model_path, map_location=device)
+		#checkpoint = torch.load(args.model_path)
 		model_state_dict = checkpoint.pop("model_state_dict")
 		strip_prefix_if_present(model_state_dict, "module.")
 		model_to_save.load_state_dict(model_state_dict, strict=False)

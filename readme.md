@@ -104,7 +104,7 @@ This project was supported by the American Heart Association (AHA) project (PI: 
 
 
 
-## Citing LIST
+## Citing FAST
 
 If you need to reference FAST in a publication, please cite the following paper:
 
